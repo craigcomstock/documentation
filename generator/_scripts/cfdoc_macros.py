@@ -628,6 +628,10 @@ def prune_include_lines(markdown_lines, filename):
     return markdown_lines
 
 
+def include_file(parameters, config):
+    filename = find_include_file(parameters[0], config["include_directories"])
+    return load_include_file(filename)
+
 def include_markdown(parameters, config):
     # in addition to the include search path, included markdown files are searched
     # in the directory of the including markdown file and up
