@@ -18,3 +18,5 @@ RUN bash -x /install.sh
 
 # This is where our repos will be
 WORKDIR /nt
+
+CMD sleep infinity

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 VERSION=$1
+VERSION=master # TODO figure this out right here instead of depending on a parameter
 
 if [ -z "$WRKDIR" ]
 then
