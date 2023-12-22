@@ -4,9 +4,11 @@ set -ex
 trap "echo FAILURE" ERR
 
 name=docs-revamp-22
-if ! docker inspect $name >/dev/null 2>&1; then
+docker stop docs-revamp-22 || true
+docker rm docs-revamp-22 || true
+#if ! docker inspect $name >/dev/null 2>&1; then
   docker build -t $name documentation/generator/build
-fi
+#fi
 
 # Current path must have the following repos cloned:
 # * core (used for changelog, examples)
