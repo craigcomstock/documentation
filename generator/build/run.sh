@@ -24,6 +24,12 @@ docker rm docs-revamp-22 || true
 #true "${PACKAGE_BUILD?undefined}"
 
 #c=$(buildah from -v $PWD:/nt docs-revamp-22)
+# TODO
+find . \! -user $USER -print "%u %P\n" | tee not-$USER.log
+if [ $(wc -l not-$USER.log) != "0" ]; then
+  echo "WARNING: some files in your NTECH_ROOT are not owned by you and will cause problems in the container during a docs build. Please fix and retry."
+  exit 1
+fi
 docker run -d -v $PWD:/nt --name $name $name
 #trap "buildah run $c bash -c 'sudo chown -R root:root /nt; sudo chmod -R a+rwX /nt'; buildah rm $c >/dev/null" EXIT
 docker exec -i $name bash -x documentation/generator/build/main.sh

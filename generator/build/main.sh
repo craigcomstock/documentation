@@ -24,7 +24,12 @@ set -x
 
 # take ownersip of all files
 # TODO fix the below, it takes a LONG time and can likely be avoided :)
-sudo chown -R jenkins:jenkins .
+find . \! -user jenkins -printf "%u %P\n" | tee not-jenkins.log
+if [ $(wc -l not-jenkins.log) != "0" ]; then
+  echo "Found some files not owned by jenkins, shouldn't happen. Make sure all the repo files are owned by your user account and retry."
+  cat not-jenkins.log
+  exit 1
+fi
 
 export WRKDIR=`pwd`
 
